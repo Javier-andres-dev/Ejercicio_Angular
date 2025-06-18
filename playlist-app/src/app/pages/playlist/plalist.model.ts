@@ -1,0 +1,14 @@
+export interface Cancion {
+  id: number;
+  titulo: string;
+  artista: string;
+  album: string;
+  anno: string;
+  genero: string;
+}
+
+export interface Playlist {
+  nombre: string;
+  descripcion: string;
+  canciones: Cancion[];
+}

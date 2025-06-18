@@ -1,0 +1,25 @@
+<div class="login-container">
+  <mat-card>
+    <h2>{{ isLoginMode ? 'Iniciar Sesión' : 'Registrarse' }}</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Correo</mat-label>
+        <input matInput [(ngModel)]="username" name="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [(ngModel)]="password" name="password" type="password" required />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="full-width">
+        {{ isLoginMode ? 'Entrar' : 'Registrarse' }}
+      </button>
+
+      <button mat-button color="accent" type="button" class="full-width" (click)="toggleMode()">
+        {{ isLoginMode ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
+      </button>
+    </form>
+  </mat-card>
+</div>
