@@ -11,6 +11,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ModalComponent } from './modal/modal.component';
+
+
 @Component({
   selector: 'app-playlist',
   standalone: true,
@@ -23,7 +27,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatIconModule 
+    MatIconModule,
+    MatDialogModule,
+    ModalComponent 
   ]
 })
 export class PlaylistComponent implements AfterViewInit {
@@ -34,7 +40,10 @@ export class PlaylistComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private playlistService: PlaylistService) {}
+  constructor(
+  private playlistService: PlaylistService,
+  private dialog: MatDialog
+  ) {}
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -63,8 +72,18 @@ export class PlaylistComponent implements AfterViewInit {
   }
 
   editar(row: any) {
-  alert('Editar playlist: ' + row.nombre);
-  }
+  const dialogRef = this.dialog.open(ModalComponent, {
+    width: '400px',
+    data: row
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === 'updated') {
+      this.cargarPlaylists(); // recargar lista si se editó
+    }
+  });
+}
+
 
   eliminar(row: any) {
     if (confirm(`¿Eliminar la playlist "${row.nombre}"?`)) {

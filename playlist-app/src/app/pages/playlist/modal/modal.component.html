@@ -1,1 +1,24 @@
-<p>modal works!</p>
+<div class="modal-container">
+<h2 mat-dialog-title>Editar Playlist</h2>
+
+<div mat-dialog-content>
+  <form #editForm="ngForm">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="playlist.nombre" name="nombre" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="playlist.descripcion" name="descripcion" />
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()">Guardar</button>
+</div>
+</div>
+
+
