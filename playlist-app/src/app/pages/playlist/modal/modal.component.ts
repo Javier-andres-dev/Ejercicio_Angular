@@ -9,6 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-modal',
   imports :[
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatIconModule 
+    MatIconModule,
+    MatButtonModule 
   ],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
@@ -32,7 +34,8 @@ export class ModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private playlistService: PlaylistService
   ) {
-    this.playlist = { ...data }; // Copia para editar
+    this.playlist = { ...data }; 
+    
   }
 
   guardar() {

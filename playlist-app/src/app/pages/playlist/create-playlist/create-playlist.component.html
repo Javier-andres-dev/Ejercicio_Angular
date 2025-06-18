@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>Crear nueva Playlist</h2>
+
+<mat-dialog-content [formGroup]="form">
+
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de la Playlist</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion"></textarea>
+    </mat-form-field>
+
+    <div formArrayName="canciones">
+      <div *ngFor="let cancion of canciones.controls; let i = index"
+           [formGroupName]="i"
+           style="margin-bottom: 16px; border: 1px solid #ccc; padding: 12px; border-radius: 8px;">
+
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+
+          <mat-form-field appearance="fill" style="flex: 1 1 45%;">
+            <mat-label>Título</mat-label>
+            <input matInput formControlName="titulo" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="flex: 1 1 45%;">
+            <mat-label>Artista</mat-label>
+            <input matInput formControlName="artista" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="flex: 1 1 30%;">
+            <mat-label>Género</mat-label>
+            <input matInput formControlName="genero" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="flex: 1 1 30%;">
+            <mat-label>Año</mat-label>
+            <input matInput type="number" formControlName="anno" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="flex: 1 1 30%;">
+            <mat-label>Álbum</mat-label>
+            <input matInput formControlName="album" />
+          </mat-form-field>
+
+          <div style="display: flex; align-items: center;">
+            <button mat-icon-button color="warn" (click)="eliminarCancion(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <button mat-stroked-button color="accent" (click)="agregarCancion()" style="align-self: start;">
+      <mat-icon>add</mat-icon> Añadir canción
+    </button>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()">Guardar</button>
+</mat-dialog-actions>

@@ -3,7 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { PlaylistService } from '../../services/playlist.service';
-import { Playlist } from './plalist.model';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +12,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from './modal/modal.component';
-
+import { MatButtonModule } from '@angular/material/button';
+import { CreatePlaylistComponent } from './create-playlist/create-playlist.component';
 
 @Component({
   selector: 'app-playlist',
@@ -29,7 +29,9 @@ import { ModalComponent } from './modal/modal.component';
     MatSortModule,
     MatIconModule,
     MatDialogModule,
-    ModalComponent 
+    ModalComponent,
+    MatButtonModule,
+    CreatePlaylistComponent
   ]
 })
 export class PlaylistComponent implements AfterViewInit {
@@ -72,17 +74,29 @@ export class PlaylistComponent implements AfterViewInit {
   }
 
   editar(row: any) {
-  const dialogRef = this.dialog.open(ModalComponent, {
-    width: '400px',
-    data: row
-  });
+    this.playlistService.getPlaylist(row.nombre).subscribe({
+      next: (playlistCompleta) => {
+        this.dialog.open(ModalComponent, {
+          width: '600px',
+          data: playlistCompleta
+        });
+      },
+      error: () => alert('Error al cargar playlist')
+    });
+  }
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result === 'updated') {
-      this.cargarPlaylists(); // recargar lista si se editó
-    }
-  });
-}
+  crear(): void {
+    const dialogRef = this.dialog.open(CreatePlaylistComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cargarPlaylists(); // recarga la tabla
+      }
+    });
+  }
+
 
 
   eliminar(row: any) {
